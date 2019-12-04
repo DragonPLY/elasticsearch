@@ -88,7 +88,7 @@ public class IndexLifecycleService
     }
 
     public ClusterState moveClusterStateToStep(ClusterState currentState, String indexName, StepKey currentStepKey, StepKey nextStepKey) {
-        return IndexLifecycleRunner.moveClusterStateToStep(indexName, currentState, currentStepKey, nextStepKey,
+        return IndexLifecycleTransition.moveClusterStateToStep(indexName, currentState, currentStepKey, nextStepKey,
             nowSupplier, policyRegistry);
     }
 
@@ -118,7 +118,7 @@ public class IndexLifecycleService
                 String policyName = LifecycleSettings.LIFECYCLE_NAME_SETTING.get(idxMeta.getSettings());
                 if (Strings.isNullOrEmpty(policyName) == false) {
                     final LifecycleExecutionState lifecycleState = LifecycleExecutionState.fromIndexMetadata(idxMeta);
-                    StepKey stepKey = IndexLifecycleRunner.getCurrentStepKey(lifecycleState);
+                    StepKey stepKey = LifecycleExecutionState.getCurrentStepKey(lifecycleState);
 
                     try {
                         if (OperationMode.STOPPING == currentMode) {
@@ -279,7 +279,7 @@ public class IndexLifecycleService
             String policyName = LifecycleSettings.LIFECYCLE_NAME_SETTING.get(idxMeta.getSettings());
             if (Strings.isNullOrEmpty(policyName) == false) {
                 final LifecycleExecutionState lifecycleState = LifecycleExecutionState.fromIndexMetadata(idxMeta);
-                StepKey stepKey = IndexLifecycleRunner.getCurrentStepKey(lifecycleState);
+                StepKey stepKey = LifecycleExecutionState.getCurrentStepKey(lifecycleState);
 
                 try {
                     if (OperationMode.STOPPING == currentMode) {

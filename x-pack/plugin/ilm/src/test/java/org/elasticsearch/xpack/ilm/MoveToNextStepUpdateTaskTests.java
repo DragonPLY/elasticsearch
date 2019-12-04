@@ -74,7 +74,7 @@ public class MoveToNextStepUpdateTaskTests extends ESTestCase {
             () -> now, state -> changed.set(true));
         ClusterState newState = task.execute(clusterState);
         LifecycleExecutionState lifecycleState = LifecycleExecutionState.fromIndexMetadata(newState.getMetaData().index(index));
-        StepKey actualKey = IndexLifecycleRunner.getCurrentStepKey(lifecycleState);
+        StepKey actualKey = LifecycleExecutionState.getCurrentStepKey(lifecycleState);
         assertThat(actualKey, equalTo(nextStepKey));
         assertThat(lifecycleState.getPhaseTime(), equalTo(now));
         assertThat(lifecycleState.getActionTime(), equalTo(now));
@@ -116,7 +116,7 @@ public class MoveToNextStepUpdateTaskTests extends ESTestCase {
             invalidNextStep, () -> now, s -> changed.set(true));
         ClusterState newState = task.execute(clusterState);
         LifecycleExecutionState lifecycleState = LifecycleExecutionState.fromIndexMetadata(newState.getMetaData().index(index));
-        StepKey actualKey = IndexLifecycleRunner.getCurrentStepKey(lifecycleState);
+        StepKey actualKey = LifecycleExecutionState.getCurrentStepKey(lifecycleState);
         assertThat(actualKey, equalTo(invalidNextStep));
         assertThat(lifecycleState.getPhaseTime(), equalTo(now));
         assertThat(lifecycleState.getActionTime(), equalTo(now));

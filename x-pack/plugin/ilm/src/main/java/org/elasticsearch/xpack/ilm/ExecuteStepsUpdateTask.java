@@ -103,7 +103,7 @@ public class ExecuteStepsUpdateTask extends ClusterStateUpdateTask {
                         return state;
                     } else {
                         logger.trace("[{}] moving cluster state to next step [{}]", index.getName(), nextStepKey);
-                        state = IndexLifecycleRunner.moveClusterStateToNextStep(index, state, currentStep.getKey(),
+                        state = IndexLifecycleTransition.moveClusterStateToNextStep(index, state, currentStep.getKey(),
                             nextStepKey, nowSupplier, false);
                     }
                 } else {
@@ -130,7 +130,7 @@ public class ExecuteStepsUpdateTask extends ClusterStateUpdateTask {
                         if (currentStep.getNextStepKey() == null) {
                             return state;
                         } else {
-                            state = IndexLifecycleRunner.moveClusterStateToNextStep(index, state, currentStep.getKey(),
+                            state = IndexLifecycleTransition.moveClusterStateToNextStep(index, state, currentStep.getKey(),
                                 currentStep.getNextStepKey(), nowSupplier, false);
                         }
                     } else {
@@ -145,7 +145,7 @@ public class ExecuteStepsUpdateTask extends ClusterStateUpdateTask {
                         if (stepInfo == null) {
                             return state;
                         } else {
-                            return IndexLifecycleRunner.addStepInfoToClusterState(index, state, stepInfo);
+                            return IndexLifecycleTransition.addStepInfoToClusterState(index, state, stepInfo);
                         }
                     }
                 }
